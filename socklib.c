@@ -934,6 +934,17 @@ int makeSocket(addr_type_t addr_type,
       closesocket(s);
       return -1;
     }
+	/*
+	Add SO_REUSEADDR, from:
+	https://github.com/tomswartz07/udpcast/commit/ae07a2a940136660b0e3a4cdef0d4466b060046a
+	https://github.com/FOGProject/fogproject/issues/57
+	*/
+    int yes = 1;
+    if ( setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1 )
+    {
+       udpc_fatal(1, "setsockopt failed on socket with error (%s)\n", strerror(errno));
+    }
+
     ret = bind(s, (struct sockaddr *) &myaddr, sizeof(myaddr));
     if (ret < 0) {
 	char buffer[16];
