@@ -53,3 +53,13 @@ dkms.conf
 
 # MacOs
 *.DS_Store
+
+# Build
+
+Makefile
+cmd.html.man
+config.*
+udp-receiver
+udp-receiver.1
+udp-sender
+udp-sender.1
